@@ -8,8 +8,8 @@ from request import Request
 
 
 class Stats:
-    def __init__(self, smo):
-        self.smo = smo
+    def __init__(self, system):
+        self.system = system
 
         self.queue_sizes = []
         self.working_channels = []
@@ -26,10 +26,10 @@ class Stats:
 
     def collect(self):
         cur_working_channels = 0
-        for channel in self.smo.channels:
+        for channel in self.system.channels:
             cur_working_channels += not channel.free
 
-        cur_queue_size = len(self.smo.queue)
+        cur_queue_size = len(self.system.queue)
 
         self.queue_sizes.append(cur_queue_size)
         self.working_channels.append(cur_working_channels)
@@ -63,12 +63,11 @@ class Stats:
         return pd.DataFrame(data=d), pd.DataFrame(data=d1)
 
     def get_cancel_prob(self):
-        return self.cancellations / self.smo.request_limit
+        return self.cancellations / self.system.request_limit
 
     def get_states_probs(self):
-        states = [0]  # система пуста
-        states += list(range(1, self.smo.n + 1))  # работают каналы
-        states += list(range(self.smo.n + 1, self.smo.n + self.smo.m + 1))  # работают каналы и занята очередь
+        states = list(i for i in range(self.system.n + 1))
+        states += list(i for i in range(self.system.n + 1, self.system.n + self.system.m + 1))
 
         state_counts = np.zeros(len(states))
 
@@ -116,7 +115,7 @@ class System:
             self.queue.append(request)
         else:
             self.stats.cancel()
-            logging.info('[Отменён] %s' % (request, ))
+            logging.info('[Отменён] %s' % (request,))
 
     def free_channels(self):
         for channel in self.channels:

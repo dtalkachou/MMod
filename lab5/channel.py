@@ -34,7 +34,7 @@ class Channel:
                 self.on_reject()
                 self.run(cur_time, self.request)
                 logging.info('[Отклонено] Канал #%d: освободится в %.4f' %
-                             (self.id, cur_time))
+                             (self.id, self.end_at))
             else:
                 logging.info('[Выполнено] Канал #%d: осободился в %.4f' %
                              (self.id, cur_time))
