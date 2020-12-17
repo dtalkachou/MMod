@@ -14,7 +14,7 @@ from helpers import *
 
 logging.basicConfig(
     format='%(message)s',
-    # level=logging.INFO
+    level=logging.INFO
 )
 
 
@@ -55,6 +55,7 @@ def generate_report(lambda_, mu, p, n, m, stats):
         states_bins, states_counts = stats.get_states_probs()
         _rho = lambda_ / (mu * p)
 
+        plt.xticks(states_bins)
         plt.hist(stats.total_requests, bins=np.array(states_bins) - 0.5, density=True)
         plt.savefig(os.path.join(hists_path, hist_name))
 
