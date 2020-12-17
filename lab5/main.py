@@ -4,8 +4,10 @@ import logging
 import numpy as np
 import pandas as pd
 import markdown_generator as mg
+import matplotlib.pyplot as plt
 
 from datetime import datetime
+
 
 from system import System
 from helpers import *
@@ -18,9 +20,16 @@ logging.basicConfig(
 
 def generate_report(lambda_, mu, p, n, m, stats):
     path = 'results'
+    hists_dir_name = 'hists'
+    hists_path = os.path.join(path, hists_dir_name)
     if not os.path.exists(path):
         os.makedirs(path)
-    filename = 'result_%s.md' % (datetime.now().strftime('%d%m%Y_%H%M%S'),)
+    if not os.path.exists(hists_path):
+        os.makedirs(hists_path)
+    time_now = datetime.now().strftime('%d%m%Y_%H%M%S')
+    filename = 'result_%s.md' % (time_now,)
+    hist_name = time_now + '.png'
+
     with open(os.path.join(path, filename), 'w') as f:
         doc = mg.Writer(f)
         doc.write_heading('Статистическое исследование')
@@ -46,7 +55,11 @@ def generate_report(lambda_, mu, p, n, m, stats):
         states_bins, states_counts = stats.get_states_probs()
         _rho = lambda_ / (mu * p)
 
+        plt.hist(stats.total_requests, bins=np.array(states_bins) - 0.5, density=True)
+        plt.savefig(os.path.join(hists_path, hist_name))
+
         doc.writelines([
+            '![hist](%s)' % (os.path.join(hists_dir_name, hist_name),), '',
             pd.DataFrame(data={
                 'Теоретическая вероятность': get_state_probs(_rho, n, m),
                 'Практическая вероятность': states_counts / sum(states_counts)
