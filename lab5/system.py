@@ -102,8 +102,10 @@ class System:
         logging.info('Текущее время %.4f, следующий запрос поступит %.4f' %
                      (self.cur_time, self.next_time))
 
-    def request_rejected(self):
+    def request_rejected(self, request=None):
         self.stats.reject()
+        if request:
+            self.push(request)
 
     def push(self, request=None):
         if not request:

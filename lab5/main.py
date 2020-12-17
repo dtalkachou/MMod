@@ -12,7 +12,7 @@ from helpers import *
 
 logging.basicConfig(
     format='%(message)s',
-    level=logging.INFO
+    # level=logging.INFO
 )
 
 
@@ -44,16 +44,16 @@ def generate_report(lambda_, mu, p, n, m, stats):
         ])
 
         states_bins, states_counts = stats.get_states_probs()
+        _rho = lambda_ / (mu * p)
 
         doc.writelines([
             pd.DataFrame(data={
-                'Теоретическая вероятность': get_state_probs(lambda_, p, n, m),
+                'Теоретическая вероятность': get_state_probs(_rho, n, m),
                 'Практическая вероятность': states_counts / sum(states_counts)
             }).T.to_markdown(), ''
         ])
 
         cancel_prob = stats.get_cancel_prob()
-        _rho = lambda_ / (mu * p)
         theor_cancel_prob = get_cancel_prob(_rho, n, m)
         relative_bandwidth = 1 - cancel_prob
         theor_relative_bandwidth = 1 - theor_cancel_prob

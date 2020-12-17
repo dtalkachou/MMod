@@ -12,8 +12,8 @@ def get_free_probability(p, n, m):
     return 1 / p0
 
 
-def get_state_probs(rho, p, n, m):
-    p0 = get_free_probability(p, n, m)
+def get_state_probs(rho, n, m):
+    p0 = get_free_probability(rho, n, m)
     probs = [p0]
 
     for k in range(1, n + 1):

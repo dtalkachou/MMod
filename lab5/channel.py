@@ -1,14 +1,15 @@
+import random
 import logging
 
 import numpy as np
 
 
 class Channel:
-    TOTAL_COUNT = 0
+    COUNT = 0
 
     def __init__(self, mu, reject_probability, on_reject):
-        Channel.TOTAL_COUNT += 1
-        self.id = Channel.TOTAL_COUNT
+        Channel.COUNT += 1
+        self.id = Channel.COUNT
 
         self.reject_probability = reject_probability
         self.on_reject = on_reject
@@ -29,12 +30,11 @@ class Channel:
         if not self.free and self.end_at < cur_time:
             self.free = True
 
-            rejected = np.random.uniform() <= self.reject_probability
+            rejected = random.random() <= self.reject_probability
             if rejected:
-                self.on_reject()
-                self.run(cur_time, self.request)
-                logging.info('[Отклонено] Канал #%d: освободится в %.4f' %
-                             (self.id, self.end_at))
+                self.on_reject(self.request)
+                logging.info('[Отклонено] Канал #%d: освободился в %.4f' %
+                             (self.id, cur_time))
             else:
                 logging.info('[Выполнено] Канал #%d: осободился в %.4f' %
                              (self.id, cur_time))

@@ -2,14 +2,14 @@ import logging
 
 
 class Request:
-    TOTAL = 0
+    COUNT = 0
 
     def __init__(self, cur_time):
-        Request.TOTAL += 1
-        self.id = Request.TOTAL
+        Request.COUNT += 1
+        self.id = Request.COUNT
         self.time_in_queue = 0
         self.time_in_system = 0
-        self.start_in_queue = cur_time
+        self.start_in_queue = None
         self.start_in_system = cur_time
 
     def enqueue(self, cur_time):
