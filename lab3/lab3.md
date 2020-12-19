@@ -2,17 +2,17 @@
 
 ## Сеть №1
 
-![network_1](/src/lab3/images/net1.jpg)
+![network_1](src/images/net1.jpg)
 
 ### Диаграммы маркировок
 
 #### MATLAB
 
-![diagr_1](/src/lab3/images/diag1.jpg)
+![diagr_1](src/images/diag1.jpg)
 
 #### Найденная
 
-![diagr_1_2](/src/lab3/images/diag1_2.jpg)
+![diagr_1_2](src/images/diag1_2.jpg)
 
 ### Классификация
 
@@ -33,17 +33,17 @@
 
 ## Сеть №2
 
-![network_2](/src/lab3/images/net2.jpg)
+![network_2](src/images/net2.jpg)
 
 ### Диаграммы маркировок
 
 #### MATLAB
 
-![diagr_2](/src/lab3/images/diag2.jpg)
+![diagr_2](src/images/diag2.jpg)
 
 #### Найденная
 
-![diagr_2_2](/src/lab3/images/diag2_2.jpg)
+![diagr_2_2](src/images/diag2_2.jpg)
 
 ### Классификация
 

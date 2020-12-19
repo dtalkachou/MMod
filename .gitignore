@@ -4,3 +4,6 @@
 # PyCharm
 .idea
 __pycache__
+
+# Other
+results
